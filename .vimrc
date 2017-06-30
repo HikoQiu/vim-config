@@ -33,6 +33,8 @@ Plugin 'OmniCppComplete'
 
 " 代码注释
 Plugin 'scrooloose/nerdcommenter'
+" 代码格式化
+Plugin 'rhysd/vim-clang-format'
 
 " 主题
 Plugin 'sickill/vim-monokai'
@@ -44,6 +46,8 @@ Plugin 'bling/vim-airline'
 " 在需要修改的字符串内执行, 命令: cs"', ds"
 Plugin 'tpope/vim-surround'
 
+" 自动补齐括号/引号
+Plugin 'jiangmiao/auto-pairs'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -86,6 +90,13 @@ let g:NERDTrimTrailingWhitespace = 1
 " 注释和反注释 ,cc | ,cb | ,cu 
 let g:mapleader = ","
 
+" [[ clang-format ]] 代码格式化
+let g:clang_format#style_options = {}
+" google 的代码风格
+let g:clang_format#code_style = 'google'
+" vim 离开 insert 模式时,自动格式化
+let g:clang_format#auto_format_on_insert_leave = 1
+
 " [[ vim-airline ]]
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
@@ -99,8 +110,15 @@ let g:tagbar_width=30
 autocmd BufReadPost *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx call tagbar#autoopen()
 
 " [[ OmniCppComplete ]]
+" 指定参考的 ctag 文件
+" ctags -R --sort=1 --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ -f cpp_src_2008 .
 set tags+=/home/hiko/.vim/cpp_tags/cpp_src_2008
 set tags+=/home/hiko/dev/leveldb/.ctags_leveldb
+
+" 指定vim参考的include路径
+set path+=/home/hiko/dev/leveldb
+set path+=/home/hiko/dev/leveldb/include
+
 let OmniCpp_NamespaceSearch = 1
 let OmniCpp_GlobalScopeSearch = 1
 let OmniCpp_ShowAccess = 1 
